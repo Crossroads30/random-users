@@ -10,7 +10,7 @@ import {
 const url = 'https://randomuser.me/api/'
 const defaultImage = 'https://randomuser.me/api/portraits/men/75.jpg'
 function App() {
-	const [loading, setLoading] = useState(false)
+	const [loading, setLoading] = useState(true)
 	const [person, setPerson] = useState(null)
 	const [title, setTitle] = useState('name')
 	const [value, setValue] = useState('random person')
@@ -18,7 +18,7 @@ function App() {
 	const getPerson = async () => {
 		const response = await fetch(url)
 		const data = await response.json()
-		const person = data.result[0]
+		const person = data.results[0]
 		const { phone, email } = person
 		const { large: image } = person.picture
 		const {
@@ -31,6 +31,18 @@ function App() {
 		const {
 			street: { number, name }, // we get nested property out of the object
 		} = person.location
+    const newPerson = {
+			image,
+			phone,
+			email,
+			password,
+			age,
+			fullName: `${first} ${last}`,
+			street: `${number} ${name}`,
+		}
+    setPerson(newPerson)
+    setLoading(false)
+    setValue(newPerson.fullName)
 	}
 
 	useEffect(() => {
