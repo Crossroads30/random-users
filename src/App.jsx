@@ -15,6 +15,28 @@ function App() {
 	const [title, setTitle] = useState('name')
 	const [value, setValue] = useState('random person')
 
+	const getPerson = async () => {
+		const response = await fetch(url)
+		const data = await response.json()
+		const person = data.result[0]
+		const { phone, email } = person
+		const { large: image } = person.picture
+		const {
+			login: { password }, // we get nested property out of the object
+		} = person
+		const { first, last } = person.name
+		const {
+			dob: { age }, // we get nested property out of the object
+		} = person
+		const {
+			street: { number, name }, // we get nested property out of the object
+		} = person.location
+	}
+
+	useEffect(() => {
+		getPerson()
+	}, [])
+
 	const handleValue = e => {
 		console.log(e.target)
 	}
@@ -46,11 +68,7 @@ function App() {
 						>
 							<FaEnvelopeOpen />
 						</button>
-						<button
-							className='icon'
-							data-label='age'
-							onMouseOver={handleValue}
-						>
+						<button className='icon' data-label='age' onMouseOver={handleValue}>
 							<FaCalendarTimes />
 						</button>
 						<button
@@ -75,9 +93,9 @@ function App() {
 							<FaLock />
 						</button>
 					</div>
-          <button type="button" className='btn'>
-            {loading ? 'loading...' : 'random user'}
-          </button>
+					<button type='button' className='btn'>
+						{loading ? 'loading...' : 'random user'}
+					</button>
 				</div>
 			</div>
 		</main>
