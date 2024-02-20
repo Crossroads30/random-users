@@ -37,12 +37,12 @@ function App() {
 			email,
 			password,
 			age,
-			fullName: `${first} ${last}`,
+			name: `${first} ${last}`,
 			street: `${number} ${name}`,
 		}
     setPerson(newPerson)
     setLoading(false)
-    setValue(newPerson.fullName)
+    setValue(newPerson.name)
 	}
 
 	useEffect(() => {
@@ -50,7 +50,10 @@ function App() {
 	}, [])
 
 	const handleValue = e => {
-		console.log(e.target)
+		if ( e.target.classList.contains('icon')) {
+      const newValue = e.target.dataset.label
+      setValue(person[newValue])
+    }
 	}
 
 	return (
